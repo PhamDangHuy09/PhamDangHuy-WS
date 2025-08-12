@@ -1,83 +1,67 @@
-+++
-title = "Clean up resources"
-date = 2022
-weight = 6
-chapter = false
-pre = "<b>6. </b>"
-+++
+1️⃣ Delete or Cancel Jobs
+1.Go to AWS Console → AWS Batch → Jobs.
 
-We will take the following steps to delete the resources we created in this exercise.
+2.Select All jobs tab.
 
-#### Delete EC2 instance
+3.
+-If the job is RUNNING / PENDING → Cancel job first.
 
-1. Go to [EC2 service management console](https://console.aws.amazon.com/ec2/v2/home)
-   + Click **Instances**.
-   + Select both **Public Linux Instance** and **Private Windows Instance** instances.
-   + Click **Instance state**.
-   + Click **Terminate instance**, then click **Terminate** to confirm.
+-If the job is SUCCEEDED / FAILED → Optional to remove from list (no cost).
 
-2. Go to [IAM service management console](https://console.aws.amazon.com/iamv2/home#/home)
-   + Click **Roles**.
-   + In the search box, enter **SSM**.
-   + Click to select **SSM-Role**.
-   + Click **Delete**, then enter the role name **SSM-Role** and click **Delete** to delete the role.
+4.AWS CLI example:
 
-![Clean](/images/6.clean/001-clean.png)
 
-3. Click **Users**.
-   + Click on user **Portfwd**.
-   + Click **Delete**, then enter the user name **Portfwd** and click **Delete** to delete the user.
+aws batch cancel-job --job-id <JOB_ID> --reason "Cleanup"
 
-#### Delete S3 bucket
+2️⃣ Deregister Job Definitions
+AWS won’t allow deletion if they are still in use.
 
-1. Access [System Manager - Session Manager service management console](https://console.aws.amazon.com/systems-manager/session-manager).
-   + Click the **Preferences** tab.
-   + Click **Edit**.
-   + Scroll down.
-   + In the section **S3 logging**.
-   + Uncheck **Enable** to disable logging.
-   + Scroll down.
-   + Click **Save**.
+1.AWS Console → AWS Batch → Job definitions.
 
-2. Go to [S3 service management console](https://s3.console.aws.amazon.com/s3/home)
-   + Click on the S3 bucket we created for this lab. (Example: lab-fcj-bucket-0001 )
-   + Click **Empty**.
-   + Enter **permanently delete**, then click **Empty** to proceed to delete the object in the bucket.
-   + Click **Exit**.
+2.Select each job definition → Deregister.
 
-3. After deleting all objects in the bucket, click **Delete**
+3.AWS CLI:
 
-![Clean](/images/6.clean/002-clean.png)
+aws batch deregister-job-definition --job-definition <NAME:REVISION>
 
-4. Enter the name of the S3 bucket, then click **Delete bucket** to proceed with deleting the S3 bucket.
+3️⃣ Delete Job Queues
+Make sure no job definitions or compute environments are linked.
 
-![Clean](/images/6.clean/003-clean.png)
+1.AWS Console → AWS Batch → Job queues.
 
-#### Delete VPC Endpoints
+2.Set state to DISABLED first.
 
-1. Go to [VPC service management console](https://console.aws.amazon.com/vpc/home)
-   + Click **Endpoints**.
-   + Select the 4 endpoints we created for the lab including **SSM**, **SSMMESSAGES**, **EC2MESSAGES**, **S3GW**.
-   + Click **Actions**.
-   + Click **Delete VPC endpoints**.
+3.Once disabled, Delete.
 
-![Clean](/images/6.clean/004-clean.png)
+4.AWS CLI:
 
-2. In the confirm box, enter **delete**.
-   + Click **Delete** to proceed with deleting endpoints.
 
-3. Click the refresh icon, check that all endpoints have been deleted before proceeding to the next step.
+aws batch update-job-queue --job-queue <QUEUE_NAME> --state DISABLED
+aws batch delete-job-queue --job-queue <QUEUE_NAME>
 
-![Clean](/images/6.clean/005-clean.png)
+4️⃣ Delete Compute Environments
+Managed CE: AWS will automatically remove EC2 instances after disabling.
 
-#### Delete VPC
+1.AWS Console → AWS Batch → Compute environments.
 
-1. Go to [VPC service management console](https://console.aws.amazon.com/vpc/home)
-   + Click **Your VPCs**.
-   + Click on **Lab VPC**.
-   + Click **Actions**.
-   + Click **Delete VPC**.
+2.Set state to DISABLED.
 
-2. In the confirm box, enter **delete** to confirm, click **Delete** to delete **Lab VPC** and related resources.
+3.Once disabled, Delete.
 
-![Clean](/images/6.clean/006-clean.png)
+4.AWS CLI:
+
+
+aws batch update-compute-environment --compute-environment <CE_NAME> --state DISABLED
+aws batch delete-compute-environment --compute-environment <CE_NAME>
+
+5️⃣ Remove Additional Resources (Optional but Recommended)
+-EC2 Spot Fleet / Auto Scaling Groups (if using Unmanaged CE).
+
+-IAM Roles:
+AWSBatchServiceRole
+ecsInstanceRole (if created manually)
+- ECR Repositories (if you created custom Docker images).
+✅ Recommended Cleanup Order:
+
+Jobs → Job Definitions → Job Queues → Compute Environments → IAM Roles / Logs / ECR
+
