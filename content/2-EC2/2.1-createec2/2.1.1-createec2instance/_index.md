@@ -22,4 +22,8 @@ pre : " <b> 2.1.1 </b> "
    + In the **Network Setting** select: **Select existing security group**.
    + Click **Launch instance**.
 
-![EC2 Instance](/images/2.prerequisite/002-createvpc.png)
+![EC2 Instance](/images/2.prerequisite/nameandtags.png)
+![EC2 Instance](/images/2.prerequisite/AMI.png)
+![EC2 Instance](/images/2.prerequisite/KeyPair.png)
+![EC2 Instance](/images/2.prerequisite/NetworkSettings.png)
+![EC2 Instance](/images/2.prerequisite/Configurestorage.png)

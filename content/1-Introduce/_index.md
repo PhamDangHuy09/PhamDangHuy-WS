@@ -20,4 +20,5 @@ Key Advantages of Optimizing AWS Batch with Mixed Instance Types:
 - Full AWS Integration – Works with VPC, IAM, CloudWatch, S3, ECR, and other AWS services for security, monitoring, and centralized management.
 - Applicable Across Industries – Ideal for big data analytics, scientific simulations, AI/ML training, video rendering, and image processing.
   
-By implementing this strategy, organizations can achieve high performance, substantial cost reductions, and improved resilience when Spot capacity is unavailable.
+By implementing this strategy, organizations can achieve high performance, substantial cost reductions, and improved resilience when Spot capacity is unavailabe
+![clean](/images/6.clean/sodocautruc.png)

@@ -13,6 +13,5 @@ pre : " <b> 3. </b> "
   + Click **Connect**.
   + In the **connect to instance** page.
   + Click **Connect**.
-
-![Connect](/images/3.connect/009-connect.png)
-
+![Connect](/images/3.connect/New Instances.png)
+![Connect](/images/3.connect/Connect.png)
