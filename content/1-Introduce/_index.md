@@ -1,10 +1,11 @@
 ---
-title : "Introduction"
-date :  "`r Sys.Date()`" 
-weight : 1 
+title : "Batch Processing Optimization with Mixed Instance Types"
+date : "`r Sys.Date()`"
+weight : 1
 chapter : false
 pre : " <b> 1. </b> "
 ---
+
 Batch Processing Optimization with Mixed Instance Types is a technique for improving the efficiency of large-scale batch processing workloads on AWS Batch by leveraging a combination of multiple Amazon EC2 instance types (Mixed Instance Types) along with Spot Instances to significantly reduce costs while maintaining high performance.
 
 With this approach, AWS Batch automatically distributes jobs across different instance types that best match the workload’s resource requirements (CPU, RAM, GPU, etc.) and current pricing, maximizing available resources and minimizing the risk of capacity shortages or cost overruns.
