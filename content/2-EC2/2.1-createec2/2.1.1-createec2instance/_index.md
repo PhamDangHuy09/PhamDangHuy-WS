@@ -12,8 +12,8 @@ pre : " <b> 2.1.1 </b> "
    + Click **Instance**.
    + Click **Launch instance**.
 
-![EC2 Instance](static/images/2.prerequisite/EC2.png)
-![EC2 Instance](static/images/2.prerequisite/CreateInstance.png)
+![EC2 Instance](/images/2.prerequisite/EC2.png)
+![EC2 Instance](/images/2.prerequisite/CreateInstance.png)
 
 2. At the **Launch an instance** page.
    + In the **Name and tag** field, enter **Docker-Instance**.
